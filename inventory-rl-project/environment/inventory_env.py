@@ -1,6 +1,7 @@
 from collections.abc import Callable
 from math import isfinite
 from numbers import Integral
+from environment.demand_generator import generate_demand
 
 import gymnasium as gym
 import numpy as np
