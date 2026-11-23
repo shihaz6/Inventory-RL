@@ -26,7 +26,7 @@ from stable_baselines3.common.monitor import Monitor
 
 from environment.inventory_env import InventoryEnv
 
-PROJECT_ROOT = Path(__file__).resolve().parents[1]
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
 MODELS_DIR = PROJECT_ROOT / "models" / "dqn"
 COLAB_DRIVE_ROOT = Path("/content/drive/MyDrive")
 COLAB_DRIVE_DIR = COLAB_DRIVE_ROOT / "inventory-rl" / "models" / "dqn"

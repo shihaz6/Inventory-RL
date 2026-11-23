@@ -1,4 +1,4 @@
-from collections.abc import Callable
+from collections.abc import Callable, Sequence
 from math import isfinite
 from numbers import Integral
 from environment.demand_generator import generate_demand
@@ -9,6 +9,7 @@ from gymnasium import spaces
 
 
 DemandGenerator = Callable[[int, np.random.Generator], int]
+ORDER_QUANTITIES = (0, 5, 10, 20, 30, 50)
 
 
 def _default_demand(day: int, rng: np.random.Generator) -> int:
@@ -27,6 +28,7 @@ class InventoryEnv(gym.Env):
         ordering_cost: float = 2.0,
         shortage_cost: float = 5.0,
         demand_generator: DemandGenerator = _default_demand,
+        order_quantities: Sequence[int] | None = None,
     ) -> None:
         super().__init__()
         for name, value, minimum in (
@@ -54,7 +56,20 @@ class InventoryEnv(gym.Env):
         self.demand_generator = demand_generator
 
         max_order = int(max_order)
-        self.action_space = spaces.Discrete(max_order + 1)
+        self.order_quantities = (
+            tuple(range(max_order + 1))
+            if order_quantities is None
+            else tuple(order_quantities)
+        )
+        if (
+            not self.order_quantities
+            or self.order_quantities[0] != 0
+            or any(not isinstance(quantity, Integral) for quantity in self.order_quantities)
+            or any(a >= b for a, b in zip(self.order_quantities, self.order_quantities[1:]))
+        ):
+            raise ValueError("order_quantities must be increasing integers starting at zero")
+        max_order = int(self.order_quantities[-1])
+        self.action_space = spaces.Discrete(len(self.order_quantities))
         max_stock = self.initial_stock + max_order * self.episode_days
         upper_bounds = [max_stock, *([max_order] * self.lead_time), 6]
         self.observation_space = spaces.Box(
@@ -84,7 +99,7 @@ class InventoryEnv(gym.Env):
             raise ValueError(f"Invalid order quantity: {action!r}")
 
         day = self._day
-        order_quantity = int(action)
+        order_quantity = int(self.order_quantities[int(action)])
         demand = self.demand_generator(day, self.np_random)
         if not isinstance(demand, Integral) or demand < 0:
             raise ValueError("Demand must be a nonnegative integer")

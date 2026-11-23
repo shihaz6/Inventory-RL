@@ -2,7 +2,7 @@
 
 Consumes the per-step ``info`` dicts logged by the environment (the same dicts
 collected while running the random agent in
-``notebooks/01_environment_testing.ipynb``) and aggregates them into the KPIs
+``notebooks/02_environment_testing.ipynb``) and aggregates them into the KPIs
 reported in the project proposal.
 
 Every step info dict must contain:
