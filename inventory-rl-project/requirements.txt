@@ -1,2 +1,7 @@
-gymnasium>=1.0
-numpy>=1.21
+gymnasium==1.4.0
+stable-baselines3==2.9.2
+torch==2.15.0
+numpy==2.5.5
+pandas==3.1.1
+matplotlib==3.11.2
+seaborn==0.13.2
