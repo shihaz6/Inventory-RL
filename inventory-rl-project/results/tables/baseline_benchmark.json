@@ -1,0 +1,93 @@
+{
+  "protocol": {
+    "env_kwargs": {
+      "order_quantities": [
+        0,
+        5,
+        10,
+        20,
+        30,
+        50
+      ],
+      "initial_stock": 20,
+      "lead_time": 2,
+      "episode_days": 60,
+      "holding_cost": 1.0,
+      "ordering_cost": 2.0,
+      "shortage_cost": 5.0
+    },
+    "tuning_seeds": [
+      0,
+      49
+    ],
+    "test_seeds": [
+      1000,
+      1099
+    ],
+    "score": "mean total cost on test seeds (lower is better)"
+  },
+  "reorder_point": {
+    "params": {
+      "reorder_point": 15,
+      "order_quantity": 5
+    },
+    "tuning": {
+      "mean_cost": 1003.42,
+      "stderr_cost": 9.522437091588754
+    },
+    "test": {
+      "mean_cost": 984.61,
+      "std_cost": 64.27716106319129,
+      "stderr_cost": 6.427716106319129,
+      "n_episodes": 100,
+      "mean_total_cost": 984.61,
+      "mean_holding_cost": 129.96,
+      "mean_ordering_cost": 561.2,
+      "mean_shortage_cost": 293.45,
+      "mean_stockout_rate": 0.32583333333333336,
+      "mean_service_level": 0.8323525323435443
+    }
+  },
+  "s_S": {
+    "params": {
+      "s": 15,
+      "S": 20
+    },
+    "tuning": {
+      "mean_cost": 1074.62,
+      "stderr_cost": 8.674517689350639
+    },
+    "test": {
+      "mean_cost": 1059.79,
+      "std_cost": 53.22532529280824,
+      "stderr_cost": 5.322532529280824,
+      "n_episodes": 100,
+      "mean_total_cost": 1059.79,
+      "mean_holding_cost": 250.99,
+      "mean_ordering_cost": 599.8,
+      "mean_shortage_cost": 209.0,
+      "mean_stockout_rate": 0.20449999999999996,
+      "mean_service_level": 0.880430216354692
+    }
+  },
+  "random": {
+    "test": {
+      "mean_cost": 26201.25,
+      "std_cost": 4210.760511877141,
+      "stderr_cost": 421.0760511877141,
+      "n_episodes": 100,
+      "mean_total_cost": 26201.25,
+      "mean_holding_cost": 23882.55,
+      "mean_ordering_cost": 2317.7,
+      "mean_shortage_cost": 1.0,
+      "mean_stockout_rate": 0.001,
+      "mean_service_level": 0.9994279360588741
+    }
+  },
+  "benchmark": {
+    "policy": "reorder_point",
+    "mean_cost": 984.61,
+    "stderr_cost": 6.427716106319129,
+    "mean_reward": -984.61
+  }
+}
